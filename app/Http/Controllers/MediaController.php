@@ -1,15 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\front;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Media;
 use Illuminate\Http\Request;
 
-use App\Slide;
-use App\Category;
-use App\Products;
-
-class IndexController extends Controller
+class MediaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,23 +14,7 @@ class IndexController extends Controller
      */
     public function index()
     {
-        $listSlide = Slide::where('status', '1')->first()->toArray();
-        $categories = Category::where('status', '1')->limit(3)->get()->toArray();
-                
-        foreach ($categories as $key => $item) {
-            $categories[$key]['total_product'] = Products::where('category', $item['id'])->where('status', 1)->count();
-        }
-
-        $listProductPopular = Products::where('is_popular', 1)->where('status', 1)->skip(0)->take(8)->get()->toArray();
-            
-      
-
-        $dataView = [
-                'listSlide' => $listSlide, 
-                'categories' => $categories,
-                'listProductPopular' => $listProductPopular,
-            ];
-        return view('front.home')->with($dataView);
+        //
     }
 
     /**
@@ -61,10 +41,10 @@ class IndexController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Media  $media
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Media $media)
     {
         //
     }
@@ -72,10 +52,10 @@ class IndexController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Media  $media
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Media $media)
     {
         //
     }
@@ -84,10 +64,10 @@ class IndexController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Media  $media
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Media $media)
     {
         //
     }
@@ -95,10 +75,10 @@ class IndexController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Media  $media
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Media $media)
     {
         //
     }

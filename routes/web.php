@@ -53,6 +53,11 @@ Route::group(['middleware' => 'CheckLoginAdmin', 'prefix' => 'admin', 'namespace
 		Route::get('del/{id}', ['as' => 'admin.category.destroy', 'uses' => 'CategoryController@destroy']);
 	});
 
+
+	Route::group(['prefix' => 'media'], function(){
+		Route::get('/', ['as' => 'admin.media', 'uses' => 'MediaController@index']);
+		Route::post('store', ['as' => 'admin.media.create.post', 'uses' => 'MediaController@store']);
+	});
 	
 
 

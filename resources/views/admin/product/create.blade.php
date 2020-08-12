@@ -109,6 +109,12 @@
                       <label for="status" class="custom-control-label">Display products</label>
                     </div>
                   </div>
+                  <div class="form-group row">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input" type="checkbox" id="is_popular" value="1" name="is_popular" >
+                      <label for="is_popular" class="custom-control-label">Popular</label>
+                    </div>
+                  </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Product description</label>
                     <textarea class="textarea" name="description" value="{{ old('description') }}" placeholder="Place some text here"

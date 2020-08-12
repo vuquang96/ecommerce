@@ -57,6 +57,13 @@
             <p>  News </p>
           </a>
         </li>
+        
+        <li class="nav-item">
+          <a href="{{ route('admin.media') }}" class="nav-link">
+            <i class="nav-icon far fa-circle text-info"></i>
+            <p>  Media </p>
+          </a>
+        </li>
 
         <li class="nav-item">
           <a href="#" class="nav-link">

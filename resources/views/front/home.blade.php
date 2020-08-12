@@ -85,18 +85,18 @@
         <div class="row align-items-stretch">
           <div class="col-lg-8">
             <div class="product-item sm-height full-height bg-gray">
-              <a href="#" class="product-category">{{ $categories[0]['name'] }} <span>25 items</span></a>
+              <a href="#" class="product-category">{{ $categories[0]['name'] }} <span>{{ $categories[0]['total_product'] }} items</span></a>
               <img src="{{ asset($categories[0]['image']) }}" alt="{{ $categories[0]['name'] }}" class="img-fluid">
             </div>
           </div>
           <div class="col-lg-4">
             <div class="product-item sm-height bg-gray mb-4">
-              <a href="#" class="product-category">{{ $categories[1]['name'] }} <span>25 items</span></a>
+              <a href="#" class="product-category">{{ $categories[1]['name'] }} <span>{{ $categories[1]['total_product'] }} items</span></a>
               <img src="{{ asset($categories[1]['image']) }}" alt="{{ $categories[1]['name'] }}" class="img-fluid">
             </div>
 
             <div class="product-item sm-height bg-gray">
-              <a href="#" class="product-category">{{ $categories[2]['name'] }} <span>25 items</span></a>
+              <a href="#" class="product-category">{{ $categories[2]['name'] }} <span>{{ $categories[2]['total_product'] }} items</span></a>
               <img src="{{ asset($categories[2]['image']) }}" alt="{{ $categories[1]['name'] }}" class="img-fluid">
             </div>
           </div>
@@ -114,66 +114,20 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-4 col-md-6 item-entry mb-4">
-            <a href="#" class="product-item md-height bg-gray d-block">
-              <img src="images/prod_2.png" alt="Image" class="img-fluid">
-            </a>
-            <h2 class="item-title"><a href="#">Gray Shoe</a></h2>
-            <strong class="item-price">$20.00</strong>
-          </div>
-          <div class="col-lg-4 col-md-6 item-entry mb-4">
-            <a href="#" class="product-item md-height bg-gray d-block">
-              <img src="{{ asset('assets/front/images/prod_3.png') }}" alt="Image" class="img-fluid">
-            </a>
-            <h2 class="item-title"><a href="#">Blue Shoe High Heels</a></h2>
-            <strong class="item-price"><del>$46.00</del> $28.00</strong>
-          </div>
+          @if(count($listProductPopular) > 0)
+            @foreach($listProductPopular as $key => $item)
+              <div class="col-lg-4 col-md-6 item-entry mb-4">
+                <a href="#" class="product-item md-height bg-gray d-block">
+                  <img src="{{ asset($item['image']) }}" alt="Image" class="img-fluid">
+                </a>
+                <h2 class="item-title"><a href="#">{{ $item['name'] }}</a></h2>
+                <strong class="item-price">{{ number_format($item['price']) }}</strong>
+              </div>
+            @endforeach
+          @endif
+          
+          
 
-          <div class="col-lg-4 col-md-6 item-entry mb-4">
-            <a href="#" class="product-item md-height bg-gray d-block">
-              <img src="{{ asset('assets/front/images/model_5.png') }}" alt="Image" class="img-fluid">
-            </a>
-            <h2 class="item-title"><a href="#">Denim Jacket</a></h2>
-            <strong class="item-price"><del>$46.00</del> $28.00</strong>
-
-            <div class="star-rating">
-              <span class="icon-star2 text-warning"></span>
-              <span class="icon-star2 text-warning"></span>
-              <span class="icon-star2 text-warning"></span>
-              <span class="icon-star2 text-warning"></span>
-              <span class="icon-star2 text-warning"></span>
-            </div>
-
-          </div>
-          <div class="col-lg-4 col-md-6 item-entry mb-4">
-            <a href="#" class="product-item md-height bg-gray d-block">
-              <img src="{{ asset('assets/front/images/prod_1.png') }}" alt="Image" class="img-fluid">
-            </a>
-            <h2 class="item-title"><a href="#">Leather Green Bag</a></h2>
-            <strong class="item-price"><del>$46.00</del> $28.00</strong>
-            <div class="star-rating">
-              <span class="icon-star2 text-warning"></span>
-              <span class="icon-star2 text-warning"></span>
-              <span class="icon-star2 text-warning"></span>
-              <span class="icon-star2 text-warning"></span>
-              <span class="icon-star2 text-warning"></span>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 item-entry mb-4">
-            <a href="#" class="product-item md-height bg-gray d-block">
-              <img src="{{ asset('assets/front/images/model_1.png') }}" alt="Image" class="img-fluid">
-            </a>
-            <h2 class="item-title"><a href="#">Smooth Cloth</a></h2>
-            <strong class="item-price"><del>$46.00</del> $28.00</strong>
-          </div>
-          <div class="col-lg-4 col-md-6 item-entry mb-4">
-            <a href="#" class="product-item md-height bg-gray d-block">
-              <img src="{{ asset('assets/front/images/model_7.png') }}" alt="Image" class="img-fluid">
-            </a>
-            <h2 class="item-title"><a href="#">Yellow Jacket</a></h2>
-            <strong class="item-price">$58.00</strong>
-          </div>
 
         </div>
       </div>

@@ -60,6 +60,7 @@ class ProductController extends Controller
         $description =  isset($data['description']) ? $data['description'] : '';
         $status =  isset($data['status']) ? $data['status'] : '1';
         $category =  isset($data['category']) ? $data['category'] : '0';
+        $is_popular =  isset($data['is_popular']) ? $data['is_popular'] : '0';
 
         $dataInsert = [
             'is_out_site' => $is_out_site,
@@ -70,6 +71,7 @@ class ProductController extends Controller
             'product_code' => $product_code,
             'slug' => $slug,
             'category' => $category,
+            'is_popular' => $is_popular,
             'description' => $description,
             'status' => $status,
             'image' => '',
@@ -169,6 +171,8 @@ class ProductController extends Controller
         $product->slug           =  isset($data['slug']) ? $data['slug'] : '';
         $product->description    =  isset($data['description']) ? $data['description'] : '';
         $product->status         =  isset($data['status']) ? $data['status'] : '0';
+        $product->category         =  isset($data['category']) ? $data['category'] : '0';
+        $product->is_popular         =  isset($data['is_popular']) ? $data['is_popular'] : '0';
         
             
         if($request->hasFile('image')){
