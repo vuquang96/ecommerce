@@ -35,48 +35,72 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table class="table table-striped">
                   <thead>
-                  <tr>
-                    <th>STT</th>
-                    <th>Name</th>
-                    <th>Code</th>
-                    <th width="5%"></th>
-                    <th width="5%"></th>
-                  </tr>
+                    <tr>
+                      <th scope="col">
+                        <div class="custom-control custom-checkbox">
+                          <input class="custom-control-input" type="checkbox" id="customCheckbox2">
+                          <label for="customCheckbox2" class="custom-control-label"></label>
+                        </div>
+                      </th>
+                      <th scope="col">Name</th>
+                      <th scope="col">SKU</th>
+                      <th scope="col">Stock</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Categories</th>
+                      <th scope="col">Tags</th>
+                      <th scope="col"><i class="fas fa-star"></i></th>
+                    </tr>
                   </thead>
                   <tbody>
-                    @foreach($products as $key => $item)
-                      <tr>
-                        <td>{{ $key + 1 }}</td>
-                        <td><a href="{{ route('admin.product.edit', $item['id']) }}">{{ $item['name'] }}</a></td>
-                        <td>{{ $item['product_code'] }}</td>
-                        <td style="text-align: center;">
-                          @if($item['status'])
-                            <i class="fa fa-check" aria-hidden="true" style="color: #155724;"></i>
-                          @else
-                            <i class="fa fa-times" aria-hidden="true" style="color: #721c24;"></i>
-                          @endif
-                        </td>
-                        <td style="text-align: center;">
-                          <a href="{{ route('admin.product.del', $item['id']) }}">
-                            <i class="fa fa-trash" aria-hidden="true" style="color: #721c24;"></i>
-                          </a>
-                        </td>
-                      </tr>
-                    @endforeach
+                    <tr>
+                      <th scope="row">
+                        <div class="custom-control custom-checkbox">
+                          <input class="custom-control-input" type="checkbox" id="customCheckbox2">
+                          <label for="customCheckbox2" class="custom-control-label"></label>
+                        </div>
+                      </th>
+                      <td>
+                        WordPress Pennant
+                        <div class="row-actions">
+                          <span class="id">ID: 40 | </span>
+                          <span class="edit"><a href="#" aria-label="Edit">Edit</a> | </span>
+                          <span class="trash"><a href="#" class="submitdelete" aria-label="Move">Trash</a> | </span>
+                          <span class="view"><a href="#">View</a> | </span>
+                          <span class="duplicate"><a href="#" aria-label="" rel="permalink">Duplicate</a></span>
+                        </div>
+                      </td>
+                      <td>wp-pennant</td>
+                      <td>In stock</td>
+                      <td>$11.05</td>
+                      <td>Decor</td>
+                      <td></td>
+                      <td><i class="fas fa-star"></i></td>
+                    </tr>
+                    
                   </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>STT</th>
-                    <th>Name</th>
-                    <th>Code</th>
-                    <th width="5%"></th>
-                    <th width="5%"></th>
-                  </tr>
-                  </tfoot>
                 </table>
+                <ul class="pagination" style="float: right;">
+                  <li class="paginate_button page-item previous disabled" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                  </li>
+                  <li class="paginate_button page-item active"><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+                  </li>
+                  <li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0" class="page-link">2</a>
+                  </li>
+                  <li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0" class="page-link">3</a>
+                  </li>
+                  <li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0" class="page-link">4</a>
+                  </li>
+                  <li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0" class="page-link">5</a>
+                  </li>
+                  <li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0" class="page-link">6</a>
+                  </li>
+                  <li class="paginate_button page-item next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                  </li>
+              </ul>
               </div>
+              
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -92,33 +116,10 @@
 
 @endsection
 
-@section('scriptLink')
 
-<script src="{{ asset('assets/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('assets/admin/dist/js/adminlte.min.js') }}"></script>
-<script src="{{ asset('assets/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-
-@endsection
 
 @section('script')
-<script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true,
-      "autoWidth": false,
-    });
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
-</script>
+
 
 @if(\Session::has('success'))
     <script type="text/javascript">

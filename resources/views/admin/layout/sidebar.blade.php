@@ -23,6 +23,78 @@
           </a>
         </li>
 
+        <li class="nav-item has-treeview">
+          <a href="{{ route('admin.product') }}" class="{{ request()->is('admin/product*') ? 'active' : '' }} nav-link">
+            <i class="fab fa-product-hunt"></i>
+            <p>
+              Products
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('admin.product') }}" class="{{ request()->is('admin/product') ? 'active' : '' }} nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All Products</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="pages/examples/invoice.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add New</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="pages/examples/invoice.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Categories</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('admin.product.tag') }}" class="{{ request()->is('admin/product-tag') }} nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tags</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-book"></i>
+            <p>
+              Posts
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="pages/examples/invoice.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All Posts</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="pages/examples/invoice.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add New</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="pages/examples/invoice.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Categories</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="pages/examples/invoice.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tags</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
         <li class="nav-item ">
           <a href="{{ route('admin.product') }}" class="{{ request()->is('admin/product*') ? 'active' : '' }} nav-link ">
             <i class="fas fa-circle nav-icon"></i>

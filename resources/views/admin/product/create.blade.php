@@ -8,14 +8,9 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Create Product</h1>
+            <h1>Add new product</h1>
           </div>
-          <div class="col-sm-6">
-            <div class="float-sm-right">
-              <button type="reset" class="btn btn-warning">Reset</button>
-              <button type="submit" class="btn btn-success">Save</button>
-            </div>
-          </div>
+          
         </div>
       </div>
     </section>
@@ -23,32 +18,46 @@
     <section class="content">
         <div class="container-fluid">
           <div class="row">
-          	<div class="col-md-6">
-              <div class="card card-primary">
-                <div class="card-header">
-                  <h3 class="card-title">Image</h3>
-                </div>
-                  <div class="card-body">
-                    <div class="form-group">
-                      <label for="image">File input</label>
-                      <div class="input-group">
-                        <div class="custom-file">
-                          <input type="file" class="custom-file-input" name="image" id="image">
-                          <label class="custom-file-label" for="image">Choose file</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-              </div>
-            </div>
-
             <!-- left column -->
-            <div class="col-md-6">
+            <div class="col-md-8">
               <div class="card card-success">
                 <div class="card-header">
                   <h3 class="card-title"></h3>
                 </div>
                 <div class="card-body">
+                  <div class="form-group row">
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Product name">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <textarea class="textarea" name="description" value="{{ old('description') }}" placeholder="Place some text here"
+                            style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Slug</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" name="slug" value="{{ old('slug') }}">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Regular price</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price', '0') }}">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Sale price</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control @error('price_sale') is-invalid @enderror" name="price_sale" value="{{ old('price_sale', '0') }}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Product Short Description</label>
+                    <textarea class="textarea" name="short_description" value="{{ old('short_description') }}" placeholder="Place some text here"
+                            style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                  </div>
+
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Link out site</label>
                     <div class="col-sm-8">
@@ -68,30 +77,9 @@
                       <input type="text" class="form-control @error('product_code') is-invalid @enderror" name="product_code" value="{{ old('product_code') }}">
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Product Name</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Price</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price', '0') }}">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Price Sale</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control @error('price_sale') is-invalid @enderror" name="price_sale" value="{{ old('price_sale', '0') }}">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Slug</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" name="slug" value="{{ old('slug') }}">
-                    </div>
-                  </div>
+                  
+                  
+                  
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Category</label>
                     <div class="col-sm-8">
@@ -103,28 +91,109 @@
                       </select>
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <div class="custom-control custom-checkbox">
-                      <input class="custom-control-input" type="checkbox" id="status" value="1" name="status" checked>
-                      <label for="status" class="custom-control-label">Display products</label>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="custom-control custom-checkbox">
-                      <input class="custom-control-input" type="checkbox" id="is_popular" value="1" name="is_popular" >
-                      <label for="is_popular" class="custom-control-label">Popular</label>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Product description</label>
-                    <textarea class="textarea" name="description" value="{{ old('description') }}" placeholder="Place some text here"
-                            style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                  </div>
+                  
+                  
                   
                 </div>
               </div>
 
             </div>
+
+          	<div class="col-md-4">
+              
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Public</h3>
+                </div>
+                  <div class="card-body">
+                    <div class="form-group row">
+                      <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="status" value="1" name="status" checked>
+                        <label for="status" class="custom-control-label">Display products</label>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="is_popular" value="1" name="is_popular" >
+                        <label for="is_popular" class="custom-control-label">Popular</label>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <button type="submit" class="btn btn-primary">Public</button>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title">Product Categories</h3>
+                </div>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="image">File input</label>
+                      <div class="input-group">
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" name="image" id="image">
+                          <label class="custom-file-label" for="image">Choose file</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title">Product Tags</h3>
+                </div>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <div class="input-group input-group-sm">
+                        <input type="text" class="form-control">
+                        <span class="input-group-append">
+                          <button type="button" class="btn btn-info btn-flat">Add</button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Product Image</h3>
+                </div>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="image">File input</label>
+                      <div class="input-group">
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" name="image" id="image">
+                          <label class="custom-file-label" for="image">Choose file</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="card card-success">
+                <div class="card-header">
+                  <h3 class="card-title">Product Gallery</h3>
+                </div>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="image">File input</label>
+                      <div class="input-group">
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" name="image" id="image">
+                          <label class="custom-file-label" for="image">Choose file</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+            </div>
+
+            
             
           </div>
           <!-- /.row -->
