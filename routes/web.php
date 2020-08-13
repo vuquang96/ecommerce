@@ -57,6 +57,9 @@ Route::group(['middleware' => 'CheckLoginAdmin', 'prefix' => 'admin', 'namespace
 	Route::group(['prefix' => 'media'], function(){
 		Route::get('/', ['as' => 'admin.media', 'uses' => 'MediaController@index']);
 		Route::post('store', ['as' => 'admin.media.create.post', 'uses' => 'MediaController@store']);
+		Route::post('del', ['as' => 'admin.media.destroy', 'uses' => 'MediaController@destroy']);
+		Route::post('update', ['as' => 'admin.media.update', 'uses' => 'MediaController@update']);
+		Route::post('load-more', ['as' => 'admin.media.loadmore', 'uses' => 'MediaController@loadMore']);
 	});
 	
 

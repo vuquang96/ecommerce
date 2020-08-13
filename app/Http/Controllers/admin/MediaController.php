@@ -5,9 +5,11 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Media;
 use Illuminate\Http\Request;
+use DB;
 
 class MediaController extends Controller
 {
+    public $perPage = 10;
     /**
      * Display a listing of the resource.
      *
@@ -15,9 +17,22 @@ class MediaController extends Controller
      */
     public function index()
     {
-        $mediaList = Media::all();
-           
+        //DB::table('media')->update(['order' => '0']);
+
+        $mediaList = Media::orderBy('order', 'DESC')->orderBy('updated_at', 'DESC')->skip(0)->take($this->perPage)->get();
+       // $mediaList = Media::all();
+       
         return view('admin.media.index')->with('mediaList', $mediaList);
+    }
+
+    public function loadMore(Request $request){
+        $data = $request->all();
+
+        $pageCurrent = $data['page'];
+        $from = ($pageCurrent - 1) * $this->perPage;
+        $mediaList = Media::orderBy('order', 'DESC')->orderBy('updated_at', 'DESC')->skip($from)->take($this->perPage)->get()->toArray();
+        
+        echo json_encode($mediaList);
     }
 
     /**
@@ -38,10 +53,10 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-       /* $data = $request->all();
-            echo "<pre>";
-            print_r($data);
-            echo "<pre>";die;*/
+       // $data = $request->all();
+        $res = [
+            'status' => 0
+        ];
 
         if($request->hasFile('file')){
             $dirFile = 'uploads/media/'. date('Y') . '/' . date('m') . '/';
@@ -56,25 +71,30 @@ class MediaController extends Controller
                 $ext = $mediaImg->getClientOriginalExtension();// lấy đuôi file
                 if(in_array($ext, ['png', 'jpg', 'jpeg'])){
                     $fileName = $mediaImg->getClientOriginalName();
-                    $linkDirFile = $dirFile . $fileName;
-                    $isUpload = $mediaImg->move($directory, $fileName);
+                    $fileNameDir = date('YmdHis') . '_' .  $fileName;
+                    $linkDirFile =   $dirFile . $fileNameDir;
+                    $isUpload = $mediaImg->move($directory, $fileNameDir);
 
                     if($isUpload){
                         $dataInsert['title'] = $fileName;
                         $dataInsert['caption'] = '';
                         $dataInsert['guid'] = $linkDirFile;
-                        $dataInsert['order'] = 0;
-                        $result = Media::insert($dataInsert);
-                        if($result){
-                            echo 1;die;
+                        $dataInsert['order'] = Media::max('order') + 1;
+                        $dataInsert['created_at'] = date("Y-m-d H:i:s");
+                        $dataInsert['updated_at'] = date("Y-m-d H:i:s");
+                        
+                        $id = Media::insertGetId($dataInsert);
+                        if($id){
+                            $res['status'] = 1;
+                            $res['id'] = $id;
+                            $res['guid'] = asset($linkDirFile);
                         }
                     }
                 }
             }
         }
 
-        echo '0';die;
-        
+        echo json_encode($res);
     }
 
     /**
@@ -106,9 +126,23 @@ class MediaController extends Controller
      * @param  \App\Media  $media
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Media $media)
+    public function update(Request $request)
     {
-        //
+
+        $data = $request->all();
+
+        $id = $data['id'];
+        $idOldItem = $data['idOldItem'];
+        $order = $data['order'];
+
+        $oldItem = Media::find($idOldItem);
+
+        $media = Media::find($id);
+        $media->order = $order;
+        $media->updated_at = date("Y-m-d H:i:s", strtotime($oldItem->updated_at) + 1);
+        $result = $media->save();
+        
+
     }
 
     /**
@@ -117,8 +151,22 @@ class MediaController extends Controller
      * @param  \App\Media  $media
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Media $media)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->input('id');
+        if($id){
+            $media = Media::find($id);
+
+            if($media->guid != '' && file_exists($media->guid)){
+                unlink($media->guid);
+            }
+            $result = Media::destroy($id);
+            if($result){
+                echo 1;
+                die;
+            }
+        }
+
+        echo 0;
     }
 }

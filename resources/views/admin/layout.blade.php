@@ -2,13 +2,13 @@
 <html lang="en">
 
 @include('admin.layout.header')
-
+@yield('styleLink')
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
 
     @include('admin.layout.navbar')
 
-    @include('admin.layout.sidebar')
+    <!-- include('admin.layout.sidebar') -->
 
     @yield('main')
     
