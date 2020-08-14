@@ -25,4 +25,5 @@
   <link rel="stylesheet" href="{{ asset('assets/admin/plugins/summernote/summernote-bs4.min.css') }}">
 
   <link rel="stylesheet" href="{{ asset('assets/admin/dist/css/app.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/admin/plugins/select2/css/select2.min.css') }}">
 </head>

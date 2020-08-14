@@ -39,4 +39,5 @@
   <!-- AdminLTE for demo purposes -->
   <script src="{{ asset('assets/admin/dist/js/demo.js') }}"></script>
   <script src="{{ asset('lib/notify.min.js') }}"></script>
+  <script src="{{ asset('assets/admin/plugins/select2/js/select2.min.js') }}"></script>
 </footer>

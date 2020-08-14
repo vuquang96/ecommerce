@@ -4,6 +4,9 @@
 <div class="content-wrapper">
   <form method="post" action="{{ route('admin.product.create.post') }}" enctype="multipart/form-data">
     @csrf()
+    <input type="hidden" name="media_loadmore" value="{{route('admin.product.media.loadmore')}}">
+    <input type="hidden" name="asset_link" value="{{asset('')}}">
+
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -104,6 +107,10 @@
               <div class="card card-primary">
                 <div class="card-header">
                   <h3 class="card-title">Public</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                  </div>
                 </div>
                   <div class="card-body">
                     <div class="form-group row">
@@ -127,6 +134,10 @@
               <div class="card card-info">
                 <div class="card-header">
                   <h3 class="card-title">Product Categories</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                  </div>
                 </div>
                   <div class="card-body">
                     <div class="form-group">
@@ -144,14 +155,19 @@
               <div class="card card-info">
                 <div class="card-header">
                   <h3 class="card-title">Product Tags</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                  </div>
                 </div>
                   <div class="card-body">
                     <div class="form-group">
-                      <div class="input-group input-group-sm">
-                        <input type="text" class="form-control">
-                        <span class="input-group-append">
-                          <button type="button" class="btn btn-info btn-flat">Add</button>
-                        </span>
+                      <div class="input-group">
+                        <select class="product-tag" name="tags[]" multiple="multiple">
+                          @foreach($tags as $tag)
+                            <option value="{{$tag->id}}">{{$tag->name}}</option>
+                          @endforeach
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -160,6 +176,10 @@
               <div class="card card-primary">
                 <div class="card-header">
                   <h3 class="card-title">Product Image</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                  </div>
                 </div>
                   <div class="card-body">
                     <div class="form-group">
@@ -171,23 +191,47 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="form-group">
+                      <button type="button" class="btn btn-primary btn-media btn-image-large" data-toggle="modal" data-target=".modal-media">Large modal</button>
+                    </div>
+
+                    <div class="row product-large">
+                      <div class="col-md-12 item-media">
+                        <div class="preview">
+                          <img src="https://hasinhayder.github.io/ImageCaptionHoverAnimation/img/everycowboy_dribbbleready_shot.jpg">
+                        </div>
+                        <i class="fas fa-times-circle"></i>
+                      </div>
+                      
+                    </div>
+                    <input type="hidden" name="product_large" value="">
+
                   </div>
               </div>
 
               <div class="card card-success">
                 <div class="card-header">
                   <h3 class="card-title">Product Gallery</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                  </div>
                 </div>
                   <div class="card-body">
                     <div class="form-group">
-                      <label for="image">File input</label>
-                      <div class="input-group">
-                        <div class="custom-file">
-                          <input type="file" class="custom-file-input" name="image" id="image">
-                          <label class="custom-file-label" for="image">Choose file</label>
-                        </div>
-                      </div>
+                      <button type="button" class="btn btn-primary btn-media btn-image-gallery" data-toggle="modal" data-target=".modal-media">Large modal Gallery</button>
                     </div>
+                    <div class="row product-gallery">
+                      <!-- <div class="col-md-4 item-media">
+                        <div class="preview">
+                          <img src="https://hasinhayder.github.io/ImageCaptionHoverAnimation/img/everycowboy_dribbbleready_shot.jpg">
+                        </div>
+                        <i class="fas fa-times-circle"></i>
+                      </div> -->
+                      
+                    </div>
+                    <input type="hidden" name="product_gallery" value="">
                   </div>
               </div>
 
@@ -204,11 +248,14 @@
   </form>
 </div>
 
+@include('admin.modal.media', ['mediaList' => $mediaList])
+
 @endsection
 
 
 @section('scriptLink')
 <script src="{{ asset('assets/admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script src="{{ asset('assets/admin/dist/js/pages/product.js') }}"></script>
 
 @endsection
 
@@ -226,4 +273,5 @@
       });
     </script>
   @endif
+  
 @endsection

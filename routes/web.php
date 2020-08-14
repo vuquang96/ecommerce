@@ -28,9 +28,13 @@ Route::group(['middleware' => 'CheckLoginAdmin', 'prefix' => 'admin', 'namespace
 	Route::post('product/store', ['as' => 'admin.product.create.post', 'uses' => 'ProductController@store']);
 	Route::post('product/update/{id}', ['as' => 'admin.product.update', 'uses' => 'ProductController@update']);
 	Route::get('product/del/{id}', ['as' => 'admin.product.del', 'uses' => 'ProductController@destroy']);
+	Route::post('product/load-media', ['as' => 'admin.product.media.loadmore', 'uses' => 'ProductController@loadMoreMedia']);
 
 	Route::group(['prefix' => 'product-tag'], function(){
 		Route::get('/', ['as' => 'admin.product.tag', 'uses' => 'ProductTagsController@index']);
+		Route::post('store', ['as' => 'admin.product.tag.post', 'uses' => 'ProductTagsController@store']);
+		Route::post('destroy', ['as' => 'admin.product.tag.destroy', 'uses' => 'ProductTagsController@destroy']);
+		Route::post('update', ['as' => 'admin.product.tag.update', 'uses' => 'ProductTagsController@update']);
 	});
 
 	Route::get('slide', ['as' => 'admin.slide', 'uses' => 'SlideController@index']);

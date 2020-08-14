@@ -1,10 +1,5 @@
 @extends('admin.layout')
 
-@section('styleLink')
-
-  <link rel="stylesheet" href="{{ asset('assets/admin/dist/css/app.css') }}">
-
-@endsection
 
 @section('main')
   <link rel="stylesheet"  href="{{ asset('assets/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}" />
@@ -40,7 +35,7 @@
           <input type="hidden" name="page" value="1">
           <input type="hidden" name="asset_link" value="{{asset('')}}">
 
-          <div class="file-upload">
+          <div class="file-upload hide">
             <button class="file-upload-btn" type="button">Add Image</button>
 
             <div class="image-upload-wrap">
@@ -82,7 +77,5 @@
 @endsection
 
 @section('scriptLink')
-
-<script src="{{ asset('assets/admin/dist/js/pages/media.js') }}"></script>
-
+  <script src="{{ asset('assets/admin/dist/js/pages/media.js') }}"></script>
 @endsection

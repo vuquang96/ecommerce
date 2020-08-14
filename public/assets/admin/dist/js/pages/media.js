@@ -75,6 +75,8 @@
           }
       });
 
+   
+
     $(document).on('click', "#media-img .item i", function(){
       var itemID = $(this).parent('.item').data('id');
 

@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 
 use App\Products;
 use App\Category;
+use App\Media;
+use App\ProductTags;
 
 class ProductController extends Controller
 {
+    public $perPage = 2;
+
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +26,16 @@ class ProductController extends Controller
         return view('admin.product.index', ['products' => $products]);
     }
 
+    public function loadMoreMedia(Request $request){
+        $data = $request->all();
+
+        $pageCurrent = $data['page'];
+        $from = ($pageCurrent - 1) * $this->perPage;
+        $mediaList = Media::orderBy('order', 'DESC')->orderBy('updated_at', 'DESC')->skip($from)->take($this->perPage)->get()->toArray();
+        
+        echo json_encode($mediaList);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -30,8 +44,15 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::where('status', '1')->get()->toArray();
-            
-        return view('admin.product.create')->with('categories', $categories);
+        $mediaList = Media::orderBy('order', 'DESC')->orderBy('updated_at', 'DESC')->skip(0)->take($this->perPage)->get();
+        $tags = ProductTags::all();
+               
+        $data = [
+            'categories'    => $categories,
+            'tags'          => $tags,
+            'mediaList'     => $mediaList,
+        ];
+        return view('admin.product.create')->with($data);
     }
 
     /**
