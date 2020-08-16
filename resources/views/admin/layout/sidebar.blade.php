@@ -39,13 +39,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/examples/invoice.html" class="nav-link">
+              <a href="{{route('admin.product.create')}}" class="nav-link  {{request()->is('admin/product/create') ? 'active' : ''}}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Add New</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/examples/invoice.html" class="nav-link">
+              <a href="{{route('admin.product.cat')}}" class="nav-link {{ request()->is('admin/product-cat') }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Categories</p>
               </a>

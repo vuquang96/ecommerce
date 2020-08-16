@@ -256,6 +256,7 @@
 @section('scriptLink')
 <script src="{{ asset('assets/admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 <script src="{{ asset('assets/admin/dist/js/pages/product.js') }}"></script>
+<script src="{{ asset('assets/admin/dist/js/pages/media-popup.js') }}"></script>
 
 @endsection
 

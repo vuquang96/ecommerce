@@ -198,3 +198,13 @@
   top: 1px;
   cursor: pointer;
 }
+
+#product_cat_thumbnail{
+  float: left; 
+  margin-right: 10px;
+}
+#product_cat_thumbnail img{
+  width: 60px;
+  height: 60px;
+  border: 1px solid #999;
+}
