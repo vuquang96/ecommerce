@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\ProductCategories;
+use DB;
 
 class ProductCategoriesController extends Controller
 {
@@ -16,7 +17,9 @@ class ProductCategoriesController extends Controller
      */
     public function index()
     {
-        $catProduct = ProductCategories::all();
+
+        $catProduct = ProductCategories::all()->toArray();
+
         return view('admin.product_categories.index')->with(['catProduct' => $catProduct]);
     }
 
@@ -38,8 +41,42 @@ class ProductCategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+         
+          
+            
+        $name = $data['name'];
+        $description = isset($data['description']) ? $data['description'] : '';
+        $parentID = isset($data['parent_id']) ? $data['parent_id'] : null;
+        $slug = $data['slug'];
+        $thumbnail = isset($data['thumbnail']) ? $data['thumbnail'] : '';
+        if(trim($slug) == ''){
+            $slug = slugify($name);
+        }else{
+            $slug = slugify($slug);
+        }
+    
+        $dataInsert = [
+            'name' => $name,
+            'slug' => $slug,
+            'thumbnail' => $thumbnail,
+            'parent_id' => $parentID,
+            'description' => $description,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ];
+
+        $id = ProductCategories::insertGetId($dataInsert);
+       
+        if($id){
+            $cat = ProductCategories::find($id)->toArray();
+            echo json_encode($cat);
+        }else{
+            echo 0;
+        }
     }
+
+
 
     /**
      * Display the specified resource.
@@ -81,8 +118,21 @@ class ProductCategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $data = $request->all();
+        
+        $ids = $data['ids'];
+        if(is_array(($ids))){
+                  
+            DB::table('product_categories')->whereIn('parent_id',$ids)->update(['parent_id'=>null]);
+           // ProductCategories::whereIn('parent_id',$ids)->update('parent_id', 'null');
+            $result = ProductCategories::destroy($ids);
+            if($result){
+                echo 1;
+                die;
+            }
+        }
+        echo 0;
     }
 }

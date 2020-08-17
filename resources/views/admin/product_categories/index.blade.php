@@ -4,8 +4,8 @@
 <div class="content-wrapper">
   
     @csrf()
-    <input type="hidden" name="tag_post" value="{{ route('admin.product.tag.post') }}">
-    <input type="hidden" name="tag_destroy" value="{{ route('admin.product.tag.destroy') }}">
+    <input type="hidden" name="cat_post" value="{{ route('admin.product.cat.post') }}">
+    <input type="hidden" name="cat_destroy" value="{{ route('admin.product.cat.destroy') }}">
     <input type="hidden" name="tag_update" value="{{ route('admin.product.tag.update') }}">
 
     <section class="content-header">
@@ -45,12 +45,23 @@
                   </div>
                   <div class="form-group">
                     <label>Parent Category</label>
-                    <select class="form-control">
+                    <select class="form-control" id="parent_id">
                       <option value="">None</option>
-                      <option>option 2</option>
-                      <option>option 3</option>
-                      <option>option 4</option>
-                      <option>option 5</option>
+                        <?php
+                            function showCategoriesOption($categories, $parent_id = 0, $char = ''){
+                                foreach ($categories as $key => $item){
+                                    if ($item['parent_id'] == $parent_id){
+                                      ?>
+                                      <option value="{{$item['id']}}">{{$char.$item['name']}}</option>
+                                      <?php
+                                        unset($categories[$key]);
+                                        showCategoriesOption($categories, $item['id'], $char.'—');
+                                    }
+                                }
+                            }
+                            showCategoriesOption($catProduct);
+                          ?>
+
                     </select>
                   </div>
                   <div class="form-group">
@@ -66,11 +77,11 @@
                     </div>
                     
                   </div>
-                  <input type="hidden" name="id" id="id_tag" value="">
+                  <input type="hidden" name="id" id="id_cat" value="">
                 </div>
                 <div class="card-footer">
-                  <button type="button" class="btn btn-primary btn-new-tag">Add new tag</button>
-                  <button type="button" class="btn btn-info btn-edit-tag hide">Edit tag</button>
+                  <button type="button" class="btn btn-primary btn-new-cat">Add new category</button>
+                  <button type="button" class="btn btn-info btn-edit-cat hide">Edit category</button>
                 </div>
               </div>
             </div>
@@ -94,7 +105,6 @@
                			</div>
                		</div>
 		              
-
 										<table class="table table-striped">
 										  <thead>
 										    <tr>
@@ -112,21 +122,34 @@
 										    </tr>
 										  </thead>
 										  <tbody id="cat-list">
-                        @foreach($catProduct as $cat)
-  										    <tr class="cat-item cat-{{$cat->id}}">
-  										      <th>
-  										      	<div class="custom-control custom-checkbox">
-  		                          <input class="custom-control-input" type="checkbox" id="cat-{{$cat->id}}" value="{{$cat->id}}">
-  		                          <label for="cat-{{$cat->id}}" class="custom-control-label"></label>
-  		                        </div>
-  										      </th>
-  										      <td class="cat-thumbnail">img</td>
-                            <td class="cat-name" data-id="{{$cat->id}}">{{ $cat->name }}</td>
-                            <td class="cat-des">{{ $cat->description }}</td>
-  										      <td class="cat-slug">{{ $cat->slug }}</td>
-  										      <td>1</td>
-  										    </tr>
-										    @endforeach
+
+                        <?php
+                          function showCategories($categories, $parent_id = 0, $char = ''){
+                              foreach ($categories as $key => $item){
+                                  if ($item['parent_id'] == $parent_id){
+                                    ?>
+                                    <tr class="cat-item cat-{{$item['id']}}">
+                                      <th>
+                                        <div class="custom-control custom-checkbox">
+                                          <input class="custom-control-input" type="checkbox" id="cat-{{$item['id']}}" value="{{$item['id']}}">
+                                          <label for="cat-{{$item['id']}}" class="custom-control-label"></label>
+                                        </div>
+                                      </th>
+                                      <td class="cat-thumbnail">img</td>
+                                      <td class="cat-name" data-id="{{$item['id']}}">{{$char}}{{$item['name']}}</td>
+                                      <td class="cat-des">{{$item['description']}}</td>
+                                      <td class="cat-slug">{{$item['slug']}}</td>
+                                      <td>1</td>
+                                    </tr>
+                                    <?php
+                                      unset($categories[$key]);
+                                      showCategories($categories, $item['id'], $char.'—');
+                                  }
+                              }
+                          }
+                          showCategories($catProduct);
+                        ?>
+
 										  </tbody>
 										</table>
 
@@ -141,5 +164,5 @@
 @endsection
 
 @section('scriptLink')
-  <script src="{{ asset('assets/admin/dist/js/pages/product-tag.js') }}"></script>
+  <script src="{{ asset('assets/admin/dist/js/pages/product-cat.js') }}"></script>
 @endsection

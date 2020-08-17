@@ -88,9 +88,23 @@
                     <div class="col-sm-8">
                       <select class="form-control" name="category">
                         <option value="0">-- Select --</option>
-                        @foreach($categories as $key => $category)
+                        <!-- @foreach($categories as $key => $category)
                           <option value="{{ $category['id'] }}">{{ $category['name'] }}</option>
-                        @endforeach
+                        @endforeach -->
+                        <?php
+                          /*function showCategoriesOption($categories, $parent_id = 0, $char = ''){
+                              foreach ($categories as $key => $item){
+                                  if ($item['parent_id'] == $parent_id){
+                                    ?>
+                                    <option value="{{$item['id']}}">{{$char.$item['name']}}</option>
+                                    <?php
+                                      unset($categories[$key]);
+                                      showCategoriesOption($categories, $item['id'], $char.'—');
+                                  }
+                              }
+                          }
+                          showCategoriesOption($categories);*/
+                        ?>
                       </select>
                     </div>
                   </div>
@@ -140,15 +154,23 @@
                   </div>
                 </div>
                   <div class="card-body">
-                    <div class="form-group">
-                      <label for="image">File input</label>
-                      <div class="input-group">
-                        <div class="custom-file">
-                          <input type="file" class="custom-file-input" name="image" id="image">
-                          <label class="custom-file-label" for="image">Choose file</label>
-                        </div>
-                      </div>
-                    </div>
+                    <select class="form-control" name="category">
+                        <option value="0">-- Select --</option>
+                        <?php
+                          function showCategoriesOption($categories, $parent_id = 0, $char = ''){
+                              foreach ($categories as $key => $item){
+                                  if ($item['parent_id'] == $parent_id){
+                                    ?>
+                                    <option value="{{$item['id']}}">{{$char.$item['name']}}</option>
+                                    <?php
+                                      unset($categories[$key]);
+                                      showCategoriesOption($categories, $item['id'], $char.'—');
+                                  }
+                              }
+                          }
+                          showCategoriesOption($categories);
+                        ?>
+                      </select>
                   </div>
               </div>
 
@@ -197,12 +219,6 @@
                     </div>
 
                     <div class="row product-large">
-                      <div class="col-md-12 item-media">
-                        <div class="preview">
-                          <img src="https://hasinhayder.github.io/ImageCaptionHoverAnimation/img/everycowboy_dribbbleready_shot.jpg">
-                        </div>
-                        <i class="fas fa-times-circle"></i>
-                      </div>
                       
                     </div>
                     <input type="hidden" name="product_large" value="">

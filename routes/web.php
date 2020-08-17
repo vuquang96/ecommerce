@@ -22,13 +22,17 @@ Route::group(['middleware' => 'CheckLoginAdmin', 'prefix' => 'admin', 'namespace
 	Route::get('/', ['as' => 'admin.index', 'uses' => 'IndexController@index']);
 
 
-	Route::get('product', ['as' => 'admin.product', 'uses' => 'ProductController@index']);
-	Route::get('product/edit/{id}', ['as' => 'admin.product.edit', 'uses' => 'ProductController@edit']);
-	Route::get('product/create', ['as' => 'admin.product.create', 'uses' => 'ProductController@create']);
-	Route::post('product/store', ['as' => 'admin.product.create.post', 'uses' => 'ProductController@store']);
-	Route::post('product/update/{id}', ['as' => 'admin.product.update', 'uses' => 'ProductController@update']);
-	Route::get('product/del/{id}', ['as' => 'admin.product.del', 'uses' => 'ProductController@destroy']);
-	Route::post('product/load-media', ['as' => 'admin.product.media.loadmore', 'uses' => 'ProductController@loadMoreMedia']);
+	Route::group(['prefix' => "product"], function(){
+		Route::get('/', ['as' => 'admin.product', 'uses' => 'ProductController@index']);
+		Route::get('edit/{id}', ['as' => 'admin.product.edit', 'uses' => 'ProductController@edit']);
+		Route::get('create', ['as' => 'admin.product.create', 'uses' => 'ProductController@create']);
+		Route::post('store', ['as' => 'admin.product.create.post', 'uses' => 'ProductController@store']);
+		Route::post('update/{id}', ['as' => 'admin.product.update', 'uses' => 'ProductController@update']);
+		Route::get('del/{id}', ['as' => 'admin.product.del', 'uses' => 'ProductController@destroy']);
+		Route::post('load-media', ['as' => 'admin.product.media.loadmore', 'uses' => 'ProductController@loadMoreMedia']);
+	});
+
+	
 
 	Route::group(['prefix' => 'product-tag'], function(){
 		Route::get('/', ['as' => 'admin.product.tag', 'uses' => 'ProductTagsController@index']);
@@ -40,21 +44,28 @@ Route::group(['middleware' => 'CheckLoginAdmin', 'prefix' => 'admin', 'namespace
 	
 	Route::group(['prefix' => 'product-cat'], function(){
 		Route::get('/', ['as' => 'admin.product.cat', 'uses' => 'ProductCategoriesController@index']);
+		Route::post('store', ['as' => 'admin.product.cat.post', 'uses' => 'ProductCategoriesController@store']);
+		Route::post('destroy', ['as' => 'admin.product.cat.destroy', 'uses' => 'ProductCategoriesController@destroy']);
 	});
 
-	Route::get('slide', ['as' => 'admin.slide', 'uses' => 'SlideController@index']);
-	Route::get('slide/create', ['as' => 'admin.slide.create', 'uses' => 'SlideController@create']);
-	Route::post('slide/store', ['as' => 'admin.slide.create.post', 'uses' => 'SlideController@store']);
-	Route::get('slide/edit/{id}', ['as' => 'admin.slide.edit', 'uses' => 'SlideController@edit']);
-	Route::post('slide/update/{id}', ['as' => 'admin.slide.update', 'uses' => 'SlideController@update']);
-	Route::get('slide/destroy/{id}', ['as' => 'admin.slide.del', 'uses' => 'SlideController@destroy']);
+	Route::group(['prefix' => 'slide'], function(){
+		Route::get('/', ['as' => 'admin.slide', 'uses' => 'SlideController@index']);
+		Route::get('create', ['as' => 'admin.slide.create', 'uses' => 'SlideController@create']);
+		Route::post('store', ['as' => 'admin.slide.create.post', 'uses' => 'SlideController@store']);
+		Route::get('edit/{id}', ['as' => 'admin.slide.edit', 'uses' => 'SlideController@edit']);
+		Route::post('update/{id}', ['as' => 'admin.slide.update', 'uses' => 'SlideController@update']);
+		Route::get('destroy/{id}', ['as' => 'admin.slide.del', 'uses' => 'SlideController@destroy']);
+	});
 
-	Route::get('page', ['as' => 'admin.page', 'uses' => 'PageController@index']);
-	Route::get('page/create', ['as' => 'admin.page.create', 'uses' => 'PageController@create']);
-	Route::post('page/store', ['as' => 'admin.page.create.post', 'uses' => 'PageController@store']);
-	Route::get('page/edit/{id}', ['as' => 'admin.page.edit', 'uses' => 'PageController@edit']);
-	Route::post('page/update/{id}', ['as' => 'admin.page.update', 'uses' => 'PageController@update']);
-	Route::get('page/del/{id}', ['as' => 'admin.page.destroy', 'uses' => 'PageController@destroy']);
+	Route::group(['prefix' => 'page'], function(){
+		Route::get('/', ['as' => 'admin.page', 'uses' => 'PageController@index']);
+		Route::get('create', ['as' => 'admin.page.create', 'uses' => 'PageController@create']);
+		Route::post('store', ['as' => 'admin.page.create.post', 'uses' => 'PageController@store']);
+		Route::get('edit/{id}', ['as' => 'admin.page.edit', 'uses' => 'PageController@edit']);
+		Route::post('update/{id}', ['as' => 'admin.page.update', 'uses' => 'PageController@update']);
+		Route::get('del/{id}', ['as' => 'admin.page.destroy', 'uses' => 'PageController@destroy']);
+	});
+	
 
 
 	Route::group(['prefix' => 'category'], function(){

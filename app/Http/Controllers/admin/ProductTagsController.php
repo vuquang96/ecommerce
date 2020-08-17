@@ -44,9 +44,9 @@ class ProductTagsController extends Controller
         $description = ($data['description']) ? $data['description'] : '';
         $slug = $data['slug'];
         if(trim($slug) == ''){
-            $slug = $this->slugify($name);
+            $slug = slugify($name);
         }else{
-            $slug = $this->slugify($slug);
+            $slug = slugify($slug);
         }
     
         $dataInsert = [
@@ -67,9 +67,6 @@ class ProductTagsController extends Controller
         }
     }
 
-    public function slugify($string){
-        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string), '-'));
-    }
 
     /**
      * Display the specified resource.

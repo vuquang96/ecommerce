@@ -21,7 +21,6 @@ $(".modal-media").on('scroll', function () {
               type: 'post',
               success: function(res) {
                 var data = $.parseJSON(res);
-                console.log(data);
                 if(data.length > 0){
                   var xhtml = '';
                   $.each(data, function(index, item){

@@ -187,6 +187,9 @@
   transform: scale(1.1);
   cursor: pointer;
 }
+.modal-media .item-media .preview.active{
+  border: 2px solid #1AA059;
+}
 .product-large .item-media, 
 .product-gallery .item-media{
   position: relative;
@@ -208,3 +211,4 @@
   height: 60px;
   border: 1px solid #999;
 }
+

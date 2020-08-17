@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Products;
-use App\Category;
+use App\ProductCategories;
 use App\Media;
 use App\ProductTags;
 
@@ -43,9 +43,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::where('status', '1')->get()->toArray();
-        $mediaList = Media::orderBy('order', 'DESC')->orderBy('updated_at', 'DESC')->skip(0)->take($this->perPage)->get();
+        $categories = ProductCategories::all()->toArray();
         $tags = ProductTags::all();
+        $mediaList = Media::orderBy('order', 'DESC')->orderBy('updated_at', 'DESC')->skip(0)->take($this->perPage)->get();
+        
                
         $data = [
             'categories'    => $categories,

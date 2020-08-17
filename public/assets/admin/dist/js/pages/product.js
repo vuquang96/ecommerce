@@ -2,7 +2,9 @@ $(document).ready(function(){
 
 	$('.product-tag').select2();
 
-	
+	$(".btn-media").click(function(){
+    $(".modal-media .item-media").removeClass('active');
+  });
 
   $(document).on("click", "#media-img .item-media", function(){
     var id = $(this).data('id');
@@ -39,7 +41,7 @@ $(document).ready(function(){
       $(".btn-close-media").trigger('click');
     }
     
-    $(this).hide(200);
+    $(this).find('.preview').toggleClass('active');
   });
 
   $(document).on('click', ".product-gallery .item-media i", function(){
