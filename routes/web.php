@@ -48,6 +48,10 @@ Route::group(['middleware' => 'CheckLoginAdmin', 'prefix' => 'admin', 'namespace
 		Route::post('destroy', ['as' => 'admin.product.cat.destroy', 'uses' => 'ProductCategoriesController@destroy']);
 	});
 
+	Route::group(['prefix' => 'product-attr'], function(){
+		Route::get('/', ['as' => 'admin.product.attr', 'uses' => 'ProductAttributesController@index']);
+	});
+
 	Route::group(['prefix' => 'slide'], function(){
 		Route::get('/', ['as' => 'admin.slide', 'uses' => 'SlideController@index']);
 		Route::get('create', ['as' => 'admin.slide.create', 'uses' => 'SlideController@create']);

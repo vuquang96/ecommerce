@@ -45,15 +45,21 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{route('admin.product.cat')}}" class="nav-link {{ request()->is('admin/product-cat') }}">
+              <a href="{{route('admin.product.cat')}}" class="nav-link {{ request()->is('admin/product-cat') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Categories</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('admin.product.tag') }}" class="{{ request()->is('admin/product-tag') }} nav-link">
+              <a href="{{ route('admin.product.tag') }}" class="{{ request()->is('admin/product-tag') ? 'active' : '' }} nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Tags</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('admin.product.attr') }}" class="{{ request()->is('admin/product-attr') ? 'active' : '' }} nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Attributes</p>
               </a>
             </li>
           </ul>
