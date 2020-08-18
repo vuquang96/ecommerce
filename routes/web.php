@@ -50,6 +50,9 @@ Route::group(['middleware' => 'CheckLoginAdmin', 'prefix' => 'admin', 'namespace
 
 	Route::group(['prefix' => 'product-attr'], function(){
 		Route::get('/', ['as' => 'admin.product.attr', 'uses' => 'ProductAttributesController@index']);
+		Route::post('store', ['as' => 'admin.product.attr.post', 'uses' => 'ProductAttributesController@store']);
+		Route::get('detail/{id}', ['as' => 'admin.product.attr.detail', 'uses' => 'ProductAttributesController@show'])->where('id', '[0-9]+');
+		Route::post('update', ['as' => 'admin.product.attr.update', 'uses' => 'ProductAttributesController@update']);
 	});
 
 	Route::group(['prefix' => 'slide'], function(){

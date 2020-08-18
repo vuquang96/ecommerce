@@ -16,7 +16,7 @@ class ProductAttributesController extends Controller
      */
     public function index()
     {
-        $attributes = ProductAttributes::all();
+        $attributes = ProductAttributes::whereNull('type')->whereNull('parent_id')->get();
         return view('admin.product_attributes.index')->with('attributes', $attributes);
     }
 
@@ -38,7 +38,36 @@ class ProductAttributesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $name = isset($data['name']) ? $data['name'] : '';
+        $slug = isset($data['slug']) ? $data['slug'] : '';
+        $description = isset($data['description']) ? $data['description'] : '';
+        $parent_id = isset($data['parent_id']) ? $data['parent_id'] : null;
+        $type = isset($data['type']) ? $data['type'] : '';
+        $order = isset($data['order']) ? $data['order'] : '0';
+
+        if(trim($slug) != ''){
+            $slug = slugify($slug);
+        }else{
+            $slug = slugify($name);
+        }
+        $dataInsert = [];
+        $dataInsert['name'] = $name;
+        $dataInsert['slug'] = $slug;
+        $dataInsert['order'] = $order;
+        $dataInsert['description'] = $description;
+        $dataInsert['parent_id'] = $parent_id;
+        $dataInsert['type'] = $type;
+        $dataInsert['created_at'] = date('Y-m-d H:i:s');
+        $dataInsert['updated_at'] = date('Y-m-d H:i:s');
+
+        $id = ProductAttributes::insertGetId($dataInsert);
+        if($id){
+            $attr = ProductAttributes::find($id)->toArray();
+            echo json_encode($attr);
+        }else{
+            echo 0;
+        }
     }
 
     /**
@@ -49,7 +78,13 @@ class ProductAttributesController extends Controller
      */
     public function show($id)
     {
-        //
+        $terms = ProductAttributes::where('type', '1')->where('parent_id', $id)->get();
+
+        $data = [
+            'terms' => $terms,
+            'parent_id' => $id,
+        ];
+        return view('admin.product_attributes.detail')->with($data);
     }
 
     /**
@@ -70,9 +105,29 @@ class ProductAttributesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+
+        $data = $request->all();
+        $id = isset($data['id']) ? $data['id'] : '';
+        if($id){
+            $attr = ProductAttributes::find($id);
+            $name = isset($data['name']) ? $data['name'] : '';
+            $slug = isset($data['slug']) ? $data['slug'] : '';
+            $order = isset($data['order']) ? $data['order'] : '0';
+            $description = isset($data['description']) ? $data['description'] : '';
+
+            $attr->name = $name;
+            $attr->slug = $slug;
+            $attr->order = $order;
+            $attr->description = $description;
+            $result = $attr->save();
+            if($result){
+                echo 1;
+                die;
+            }
+        }
+        echo 0;
     }
 
     /**

@@ -212,3 +212,15 @@
   border: 1px solid #999;
 }
 
+#attr-list .row-actions .edit{
+  color: #28a745;
+  display: none;
+  cursor: pointer;
+}
+#attr-list .attr-item:hover .row-actions .edit{
+  display: block;
+} 
+#term-list .term-name{
+  color: #117a8b;
+  cursor: pointer;
+}
