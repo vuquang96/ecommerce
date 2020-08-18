@@ -16,8 +16,19 @@ class ProductAttributesController extends Controller
      */
     public function index()
     {
-        $attributes = ProductAttributes::whereNull('type')->whereNull('parent_id')->get();
-        return view('admin.product_attributes.index')->with('attributes', $attributes);
+        $attributes = ProductAttributes::where('type', '0')->where('parent_id', 0)->get();
+        $terms = [];
+        foreach ($attributes as $key => $attr) {
+            $termList = ProductAttributes::select('name')->where('type', '1')->where('parent_id', $attr->id)->get();
+            $terms[$attr->id] = $termList;
+        }   
+           
+        $data = [
+            'attributes' => $attributes,
+            'terms' => $terms,
+        ];
+
+        return view('admin.product_attributes.index')->with($data);
     }
 
     /**
@@ -42,8 +53,8 @@ class ProductAttributesController extends Controller
         $name = isset($data['name']) ? $data['name'] : '';
         $slug = isset($data['slug']) ? $data['slug'] : '';
         $description = isset($data['description']) ? $data['description'] : '';
-        $parent_id = isset($data['parent_id']) ? $data['parent_id'] : null;
-        $type = isset($data['type']) ? $data['type'] : '';
+        $parent_id = isset($data['parent_id']) ? $data['parent_id'] : '0';
+        $type = isset($data['type']) ? $data['type'] : '0';
         $order = isset($data['order']) ? $data['order'] : '0';
 
         if(trim($slug) != ''){

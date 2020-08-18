@@ -73,12 +73,23 @@
   										      <td class="attr-name" data-id="{{$attr->id}}">
                               <a href="{{route('admin.product.attr.detail', $attr->id)}}">{{ $attr->name }}</a>
                               <div class="row-actions">
-                                  <span class="edit" data-id="{{$attr->id}}">Edit</span>
+                                <span class="edit" data-id="{{$attr->id}}">Edit</span> | <span class="del" data-id="{{$attr->id}}">Delete</span>
                               </div>
                             </td>
                             <td class="attr-slug">{{ $attr->slug }}</td>
   										      <td class="attr-order">{{ $attr->order }}</td>
-  										      <td class="attr-term">1</td>
+  										      <td class="attr-term">
+                              @if(isset($terms[$attr->id]))
+                                @foreach($terms[$attr->id] as $item)
+                                  {{$item->name}}, 
+                                @endforeach
+                                <div class="row-actions">
+                                  <span class="configure-terms">
+                                    <a href="{{route('admin.product.attr.detail', $attr->id)}}">Configure terms</a>
+                                  </span>
+                                </div>
+                              @endif
+                            </td>
   										    </tr>
 										    @endforeach
 										  </tbody>

@@ -57,7 +57,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('admin.product.attr') }}" class="{{ request()->is('admin/product-attr') ? 'active' : '' }} nav-link">
+              <a href="{{ route('admin.product.attr') }}" class="{{ request()->is('admin/product-attr*') ? 'active' : '' }} nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Attributes</p>
               </a>

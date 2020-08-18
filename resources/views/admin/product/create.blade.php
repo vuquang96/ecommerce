@@ -61,53 +61,10 @@
                             style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                   </div>
 
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Link out site</label>
-                    <div class="col-sm-8">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">
-                            <input type="checkbox" name="is_out_site" value="1">
-                          </span>
-                        </div>
-                        <input type="text" class="form-control" name="link_out_site" value="{{ old('link_out_site') }}">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Product Code</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control @error('product_code') is-invalid @enderror" name="product_code" value="{{ old('product_code') }}">
-                    </div>
-                  </div>
                   
                   
                   
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Category</label>
-                    <div class="col-sm-8">
-                      <select class="form-control" name="category">
-                        <option value="0">-- Select --</option>
-                        <!-- @foreach($categories as $key => $category)
-                          <option value="{{ $category['id'] }}">{{ $category['name'] }}</option>
-                        @endforeach -->
-                        <?php
-                          /*function showCategoriesOption($categories, $parent_id = 0, $char = ''){
-                              foreach ($categories as $key => $item){
-                                  if ($item['parent_id'] == $parent_id){
-                                    ?>
-                                    <option value="{{$item['id']}}">{{$char.$item['name']}}</option>
-                                    <?php
-                                      unset($categories[$key]);
-                                      showCategoriesOption($categories, $item['id'], $char.'—');
-                                  }
-                              }
-                          }
-                          showCategoriesOption($categories);*/
-                        ?>
-                      </select>
-                    </div>
-                  </div>
+              
                   
                   
                   
@@ -127,6 +84,26 @@
                   </div>
                 </div>
                   <div class="card-body">
+                    
+                    <div class="form-group row">
+                      <label class="col-sm-5 col-form-label">Link out site</label>
+                      <div class="col-sm-7">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <input type="checkbox" name="is_out_site" value="1">
+                            </span>
+                          </div>
+                          <input type="text" class="form-control" name="link_out_site" value="{{ old('link_out_site') }}">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-5 col-form-label">Product Code</label>
+                      <div class="col-sm-7">
+                        <input type="text" class="form-control @error('product_code') is-invalid @enderror" name="product_code" value="{{ old('product_code') }}">
+                      </div>
+                    </div>
                     <div class="form-group row">
                       <div class="custom-control custom-checkbox">
                         <input class="custom-control-input" type="checkbox" id="status" value="1" name="status" checked>
@@ -138,6 +115,15 @@
                         <input class="custom-control-input" type="checkbox" id="is_popular" value="1" name="is_popular" >
                         <label for="is_popular" class="custom-control-label">Popular</label>
                       </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-5 col-form-label">Published on</label>
+                        <div class="col-sm-7 input-group date" id="published" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" data-target="#published" name="published">
+                            <div class="input-group-append" data-target="#published" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group row">
                       <button type="submit" class="btn btn-primary">Public</button>
@@ -154,23 +140,30 @@
                   </div>
                 </div>
                   <div class="card-body">
-                    <select class="form-control" name="category">
-                        <option value="0">-- Select --</option>
+                    <!-- <select class="form-control" name="category">
+                        <option value="0">-- Select --</option> -->
                         <?php
                           function showCategoriesOption($categories, $parent_id = 0, $char = ''){
                               foreach ($categories as $key => $item){
                                   if ($item['parent_id'] == $parent_id){
                                     ?>
-                                    <option value="{{$item['id']}}">{{$char.$item['name']}}</option>
+                                    <!-- <option value="{{$item['id']}}">{{$char.$item['name']}}</option> -->
+                                    <div class="form-group clearfix">
+                                      <div class="icheck-success d-inline">
+                                        {!!$char!!}<input type="checkbox" checked="" id="{{$item['name']}}-{{$item['id']}}">
+                                        <label for="{{$item['name']}}-{{$item['id']}}">{{$item['name']}}
+                                        </label>
+                                      </div>
+                                    </div>
                                     <?php
                                       unset($categories[$key]);
-                                      showCategoriesOption($categories, $item['id'], $char.'—');
+                                      showCategoriesOption($categories, $item['id'], $char.'&emsp;');
                                   }
                               }
                           }
                           showCategoriesOption($categories);
                         ?>
-                      </select>
+                      <!-- </select> -->
                   </div>
               </div>
 
@@ -205,17 +198,7 @@
                 </div>
                   <div class="card-body">
                     <div class="form-group">
-                      <label for="image">File input</label>
-                      <div class="input-group">
-                        <div class="custom-file">
-                          <input type="file" class="custom-file-input" name="image" id="image">
-                          <label class="custom-file-label" for="image">Choose file</label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <button type="button" class="btn btn-primary btn-media btn-image-large" data-toggle="modal" data-target=".modal-media">Large modal</button>
+                      <button type="button" class="btn btn-primary btn-media btn-image-large" data-toggle="modal" data-target=".modal-media">Set product image</button>
                     </div>
 
                     <div class="row product-large">
@@ -236,7 +219,7 @@
                 </div>
                   <div class="card-body">
                     <div class="form-group">
-                      <button type="button" class="btn btn-primary btn-media btn-image-gallery" data-toggle="modal" data-target=".modal-media">Large modal Gallery</button>
+                      <button type="button" class="btn btn-primary btn-media btn-image-gallery" data-toggle="modal" data-target=".modal-media">Add product gallery images</button>
                     </div>
                     <div class="row product-gallery">
                       <!-- <div class="col-md-4 item-media">
