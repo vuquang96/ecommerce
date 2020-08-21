@@ -5,7 +5,7 @@ $(document).ready(function(){
 		var slug = $("#slug").val();
 		var description = $("#description").val();
     var parentId = $("#parent_id").val();
-    var thumbnail = '';
+    var thumbnail = $("#thumbnail").val();
 
 		if($.trim(name) != ''){
 			$("#name").removeClass('is-invalid');
@@ -31,6 +31,10 @@ $(document).ready(function(){
                   	$("#slug").val('');
                   	$("#description").val('');
                     $("#parent_id").val('');
+                    $("#thumbnail").val('');
+                    var imgSrc = $("#product_cat_thumbnail img").attr('src');
+                    var defaultSrc = $("#product_cat_thumbnail img").data('src');
+                    $("#product_cat_thumbnail img").attr('src', defaultSrc);
                   	var id = data.id;
                   	var xhtml = '';
                   	xhtml += '<tr class="cat-item cat-'+id+'">';
@@ -40,7 +44,7 @@ $(document).ready(function(){
   					xhtml +=		'<label for="cat-'+id+'" class="custom-control-label"></label>';					      	
   		            xhtml +=    '</div>';          
   		            xhtml +=    '</th>';          
-  		            xhtml +=    '<td class="cat-thumbnail">'+data.name+'</td>';  
+  		            xhtml +=    '<td class="cat-thumbnail"><img src="'+imgSrc+'"></td>';  
                   xhtml +=    '<td class="cat-name" data-id="'+id+'">'+data.name+'</td>';  
   		            xhtml +=    '<td class="cat-des">'+data.description+'</td>';         
   		            xhtml +=    '<td class="cat-slug">'+data.slug+'</td>';          
@@ -180,3 +184,12 @@ $(document).ready(function(){
 		
 	});
 });
+
+$(document).on("click", "#media-img .item-media", function(){
+    var id = $(this).data('id');
+    var imgSrc = $(this).find('img').attr('src');
+    $('input[name="thumbnail"]').val(id);
+    $("#product_cat_thumbnail img").attr('src', imgSrc);
+    $(".btn-close-media").trigger('click');
+    $(this).find('.preview').toggleClass('active');
+  });

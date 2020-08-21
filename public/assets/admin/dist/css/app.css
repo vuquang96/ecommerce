@@ -212,6 +212,7 @@
   float: left; 
   margin-right: 10px;
 }
+.cat-thumbnail img,
 #product_cat_thumbnail img{
   width: 60px;
   height: 60px;

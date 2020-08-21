@@ -12,7 +12,6 @@ use App\ProductTags;
 
 class ProductController extends Controller
 {
-    public $perPage = 2;
 
     /**
      * Display a listing of the resource.
@@ -26,15 +25,6 @@ class ProductController extends Controller
         return view('admin.product.index', ['products' => $products]);
     }
 
-    public function loadMoreMedia(Request $request){
-        $data = $request->all();
-
-        $pageCurrent = $data['page'];
-        $from = ($pageCurrent - 1) * $this->perPage;
-        $mediaList = Media::orderBy('order', 'DESC')->orderBy('updated_at', 'DESC')->skip($from)->take($this->perPage)->get()->toArray();
-        
-        echo json_encode($mediaList);
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -45,13 +35,11 @@ class ProductController extends Controller
     {
         $categories = ProductCategories::all()->toArray();
         $tags = ProductTags::all();
-        $mediaList = Media::orderBy('order', 'DESC')->orderBy('updated_at', 'DESC')->skip(0)->take($this->perPage)->get();
         
                
         $data = [
             'categories'    => $categories,
             'tags'          => $tags,
-            'mediaList'     => $mediaList,
         ];
         return view('admin.product.create')->with($data);
     }

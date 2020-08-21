@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\ProductCategories;
+use App\Media;
 use DB;
 
 class ProductCategoriesController extends Controller
@@ -20,7 +21,17 @@ class ProductCategoriesController extends Controller
 
         $catProduct = ProductCategories::all()->toArray();
 
-        return view('admin.product_categories.index')->with(['catProduct' => $catProduct]);
+        /*$catProduct = DB::table('product_categories')
+                                ->join('media', 'product_categories.thumbnail', 'media.id')
+                                ->select('product_categories.*', 'media.*')
+                                ->get()->toArray();
+                                        echo "<pre>";
+                                        print_r($catProduct);
+                                        echo "</pre>";die;*/
+        $data = [
+            'catProduct' => $catProduct,
+        ];
+        return view('admin.product_categories.index')->with($data);
     }
 
     /**

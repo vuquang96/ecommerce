@@ -4,8 +4,6 @@
 <div class="content-wrapper">
   <form method="post" action="{{ route('admin.product.create.post') }}" enctype="multipart/form-data">
     @csrf()
-    <input type="hidden" name="media_loadmore" value="{{route('admin.product.media.loadmore')}}">
-    <input type="hidden" name="asset_link" value="{{asset('')}}">
 
     <section class="content-header">
       <div class="container-fluid">
@@ -61,12 +59,6 @@
                             style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                   </div>
 
-                  
-                  
-                  
-              
-                  
-                  
                   
                 </div>
               </div>

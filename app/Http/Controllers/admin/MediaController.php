@@ -9,7 +9,7 @@ use DB;
 
 class MediaController extends Controller
 {
-    public $perPage = 10;
+    public $perPage = 5;
     /**
      * Display a listing of the resource.
      *

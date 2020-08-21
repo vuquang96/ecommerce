@@ -68,12 +68,13 @@
                     <label>Description</label>
                     <textarea class="form-control" rows="3" id="description" placeholder="Enter ..."></textarea>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group"> 
                     <label>Thumbnail</label>
                     <div>
                       <div id="product_cat_thumbnail">
-                        <img src="{{asset('assets/admin/dist/img/placeholder.png')}}"></div>
-                      <button type="button" class="btn btn-success btn-thumnail">Upload/Add image</button>
+                        <img src="{{asset('assets/admin/dist/img/placeholder.png')}}" data-src="{{asset('assets/admin/dist/img/placeholder.png')}}"></div>
+                      <button type="button" class="btn btn-primary btn-media btn-image-cate" data-toggle="modal" data-target=".modal-media">Upload/Add image</button>
+                      <input type="hidden" id="thumbnail" name="thumbnail" value="">
                     </div>
                     
                   </div>
@@ -135,7 +136,18 @@
                                           <label for="cat-{{$item['id']}}" class="custom-control-label"></label>
                                         </div>
                                       </th>
-                                      <td class="cat-thumbnail">img</td>
+                                      <?php
+                                        if($item['thumbnail']){
+                                          $media = \DB::table('media')->where('id', $item['thumbnail'])->first();
+                                          ?>
+                                          <td class="cat-thumbnail"><img src="{{asset($media->guid)}}"></td>
+                                          <?php
+                                        }else{
+                                          ?>
+                                          <td class="cat-thumbnail"><img src="{{asset('assets/admin/dist/img/placeholder.png')}}"></td>
+                                          <?php
+                                        }
+                                      ?>
                                       <td class="cat-name" data-id="{{$item['id']}}">{{$char}}{{$item['name']}}</td>
                                       <td class="cat-des">{{$item['description']}}</td>
                                       <td class="cat-slug">{{$item['slug']}}</td>
@@ -160,9 +172,10 @@
         </div>
     </section>
 </div>
-
+@include('admin.modal.media')
 @endsection
 
 @section('scriptLink')
   <script src="{{ asset('assets/admin/dist/js/pages/product-cat.js') }}"></script>
+  <script src="{{ asset('assets/admin/dist/js/pages/media-popup.js') }}"></script>
 @endsection
