@@ -239,7 +239,7 @@
   </form>
 </div>
 
-@include('admin.modal.media', ['mediaList' => $mediaList])
+@include('admin.modal.media')
 
 @endsection
 

@@ -219,18 +219,23 @@
   border: 1px solid #999;
 }
 
+#cat-list .row-actions .edit,
+#cat-list .row-actions .del,
 #attr-list .row-actions .edit,
 #attr-list .row-actions .del{
   color: #28a745;
   cursor: pointer;
   display: inline;
 }
+#cat-list .row-actions .del,
 #attr-list .row-actions .del{
   color: red;
 }
+#cat-list .cat-item .row-actions,
 #attr-list .attr-item .row-actions{
   display: none;
 }
+#cat-list .cat-item:hover .row-actions,
 #attr-list .attr-item:hover .row-actions {
   display: block;
 } 

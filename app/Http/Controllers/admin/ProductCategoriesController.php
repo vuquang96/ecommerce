@@ -21,13 +21,6 @@ class ProductCategoriesController extends Controller
 
         $catProduct = ProductCategories::all()->toArray();
 
-        /*$catProduct = DB::table('product_categories')
-                                ->join('media', 'product_categories.thumbnail', 'media.id')
-                                ->select('product_categories.*', 'media.*')
-                                ->get()->toArray();
-                                        echo "<pre>";
-                                        print_r($catProduct);
-                                        echo "</pre>";die;*/
         $data = [
             'catProduct' => $catProduct,
         ];
@@ -53,8 +46,6 @@ class ProductCategoriesController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-         
-          
             
         $name = $data['name'];
         $description = isset($data['description']) ? $data['description'] : '';
@@ -118,9 +109,41 @@ class ProductCategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $id = $data['id'];
+
+        $category = ProductCategories::find($id);
+            
+        if($category){
+            $name = $data['name'];
+            $description = isset($data['description']) ? $data['description'] : '';
+            $parentID = isset($data['parent_id']) ? $data['parent_id'] : null;
+            $slug = $data['slug'];
+            $thumbnail = isset($data['thumbnail']) ? $data['thumbnail'] : $category->thumbnail;
+            if(trim($slug) == ''){
+                $slug = slugify($name);
+            }else{
+                $slug = slugify($slug);
+            }
+        
+
+            $category->name = $name;
+            $category->slug = $slug;
+            $category->thumbnail = $thumbnail;
+            $category->parent_id = $parentID;
+            $category->description = $description;
+
+            $result = $category->save();
+           
+            if($result){
+                echo 1;
+                die;
+            }
+        }
+        echo 0;
     }
 
     /**

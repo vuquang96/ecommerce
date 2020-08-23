@@ -82,7 +82,7 @@ $(document).ready(function(){
 				let value = $(this).val();
 				ids.push(value);
 			});
-      console.log(ids);
+      
 			var token = $('input[name="_token"]').val();
       var cat_destroy = $('input[name="cat_destroy"]').val();
       $.ajax({
@@ -109,52 +109,69 @@ $(document).ready(function(){
 		}
 	});
 
-	$(document).on('click', '.tag-name', function(){
-		var id = $(this).data('id');
-		var name = $(this).text();
-		var slug = $(".tag-" + id + ' .tag-slug').text();
-		var des = $(".tag-" + id + ' .tag-des').text();
-		
-		$("#name").val(name);
-      	$("#slug").val(slug);
-      	$("#description").val(des);
-      	$("#id_tag").val(id);
+	$(document).on('click', '#cat-list .edit', function(){
+		var id = $(this).parents('.cat-name').data('id');
+    var parentID = $(this).parents('.cat-name').data('parentid');
+		var name = $(this).parents('.cat-name').find('span:first').text();
+		var slug = $(".cat-" + id + ' .cat-slug').text();
+		var des = $(".cat-" + id + ' .cat-des').text();
+    var imgSrc = $(".cat-" + id + ' .cat-thumbnail img').attr('src');
 
-      	$(".btn-edit-tag").show();
+
+		$("#name").val(name);
+  	$("#slug").val(slug);
+  	$("#description").val(des);
+  	$("#id_cat").val(id);
+    $("#product_cat_thumbnail img").attr('src', imgSrc);
+    $('#parent_id').val(parentID);
+    $("#parent_id").attr('disabled', 'disabled');
+  	$(".btn-edit-cat").show();
+
 	});
 
-	$(document).on('click', '.btn-edit-tag', function(){
-		var name = $("#name").val();
-		var slug = $("#slug").val();
-		var description = $("#description").val();
-		var id = $("#id_tag").val();
+	$(document).on('click', '.btn-edit-cat', function(){
+		$(this).hide();
+    var name = $("#name").val();
+    var slug = $("#slug").val();
+    var description = $("#description").val();
+    var parentId = $("#parent_id").val();
+    var thumbnail = $("#thumbnail").val();
 
 		if($.trim(name) != ''){
 			$("#name").removeClass('is-invalid');
 
 			var token = $('input[name="_token"]').val();
-            var url_update = $('input[name="tag_update"]').val();
+      var url_update = $('input[name="cat_update"]').val();
+      var id = $('#id_cat').val();
             $.ajax({
                 url: url_update,
                 data: {
-                  '_token' 		: token,
-                  'name' 		: name,
+                  '_token'    : token,
+                  'name'       : name,
+                  'thumbnail' : thumbnail,
+                  'parent_id' : parentId,
                   'description' : description,
-                  'id' 			: id,
-                  'slug' 		: slug
+                  'slug'       : slug,
+                  'id' 			: id
                 },
                 type: 'post',
                 success: function(res) {
-                	
                   if(res){
-                  	$(".tag-" + id + ' .tag-name').text(name);
-                  	$(".tag-" + id + ' .tag-slug').text(slug);
-					$(".tag-" + id + ' .tag-des').text(description);
+                    var imgSrc = $("#product_cat_thumbnail img").attr('src');
+                    var defaultSrc = $("#product_cat_thumbnail img").data('src');
+                    $("#product_cat_thumbnail img").attr('src', defaultSrc);
+                    $(".cat-" + id + " .cat-name span:first").text(name);
+                    $(".cat-" + id + " .cat-name").data('parentid', parentId);
+                    $(".cat-" + id + ' .cat-slug').text(slug);
+                    $(".cat-" + id + ' .cat-des').text(description);
+                    $(".cat-" + id + ' .cat-thumbnail img').attr('src', imgSrc);
 
-                  	$("#name").val('');
-                  	$("#slug").val('');
-                  	$("#description").val('');
-                  	$("#id_tag").val('');
+                    $("#name").val('');
+                    $("#slug").val('');
+                    $("#description").val('');
+                    $("#parent_id").val('');
+                    $("#thumbnail").val('');
+                    $("#parent_id").removeAttr('disabled');
                   	
                   	$.notify("Update successfully", "success");
                   }else{

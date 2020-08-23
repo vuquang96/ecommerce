@@ -46,6 +46,7 @@ Route::group(['middleware' => 'CheckLoginAdmin', 'prefix' => 'admin', 'namespace
 		Route::get('/', ['as' => 'admin.product.cat', 'uses' => 'ProductCategoriesController@index']);
 		Route::post('store', ['as' => 'admin.product.cat.post', 'uses' => 'ProductCategoriesController@store']);
 		Route::post('destroy', ['as' => 'admin.product.cat.destroy', 'uses' => 'ProductCategoriesController@destroy']);
+		Route::post('update', ['as' => 'admin.product.cat.update', 'uses' => 'ProductCategoriesController@update']);
 	});
 
 	Route::group(['prefix' => 'product-attr'], function(){

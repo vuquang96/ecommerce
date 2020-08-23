@@ -6,7 +6,7 @@
     @csrf()
     <input type="hidden" name="cat_post" value="{{ route('admin.product.cat.post') }}">
     <input type="hidden" name="cat_destroy" value="{{ route('admin.product.cat.destroy') }}">
-    <input type="hidden" name="tag_update" value="{{ route('admin.product.tag.update') }}">
+    <input type="hidden" name="cat_update" value="{{ route('admin.product.cat.update') }}">
 
     <section class="content-header">
       <div class="container-fluid">
@@ -148,7 +148,12 @@
                                           <?php
                                         }
                                       ?>
-                                      <td class="cat-name" data-id="{{$item['id']}}">{{$char}}{{$item['name']}}</td>
+                                      <td class="cat-name" data-id="{{$item['id']}}" data-parentid="{{$item['parent_id']}}">
+                                        <span>{{$char}}{{$item['name']}}</span>
+                                        <div class="row-actions">
+                                          <span class="edit" data-id="{{$item['id']}}">Edit</span> | <span class="del" data-id="{{$item['id']}}">Delete</span>
+                                        </div>
+                                      </td>
                                       <td class="cat-des">{{$item['description']}}</td>
                                       <td class="cat-slug">{{$item['slug']}}</td>
                                       <td>1</td>
