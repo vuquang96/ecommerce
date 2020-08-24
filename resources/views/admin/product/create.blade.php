@@ -97,9 +97,15 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="status" value="1" name="status" checked>
-                        <label for="status" class="custom-control-label">Display products</label>
+                      <div class="form-group">
+                        <div class="custom-control custom-radio">
+                          <input class="custom-control-input" type="radio" id="status1" name="status" checked="checked" value="1">
+                          <label for="status1" class="custom-control-label">Public</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                          <input class="custom-control-input" type="radio" id="status2" name="status" value="0">
+                          <label for="status2" class="custom-control-label">Draft</label>
+                        </div>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -109,8 +115,14 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-5 col-form-label">Published on</label>
-                        <div class="col-sm-7 input-group date" id="published" data-target-input="nearest">
+                      <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="is_sale" value="1" name="on" >
+                        <label for="is_sale" class="custom-control-label">On sale</label>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Published on</label>
+                        <div class="col-sm-8 input-group date" id="published" data-target-input="nearest">
                             <input type="text" class="form-control datetimepicker-input" data-target="#published" name="published">
                             <div class="input-group-append" data-target="#published" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -132,30 +144,27 @@
                   </div>
                 </div>
                   <div class="card-body">
-                    <!-- <select class="form-control" name="category">
-                        <option value="0">-- Select --</option> -->
-                        <?php
-                          function showCategoriesOption($categories, $parent_id = 0, $char = ''){
-                              foreach ($categories as $key => $item){
-                                  if ($item['parent_id'] == $parent_id){
-                                    ?>
-                                    <!-- <option value="{{$item['id']}}">{{$char.$item['name']}}</option> -->
-                                    <div class="form-group clearfix">
-                                      <div class="icheck-success d-inline">
-                                        {!!$char!!}<input type="checkbox" checked="" id="{{$item['name']}}-{{$item['id']}}">
-                                        <label for="{{$item['name']}}-{{$item['id']}}">{{$item['name']}}
-                                        </label>
-                                      </div>
-                                    </div>
-                                    <?php
-                                      unset($categories[$key]);
-                                      showCategoriesOption($categories, $item['id'], $char.'&emsp;');
-                                  }
+                    <?php
+                      function showCategoriesOption($categories, $parent_id = 0, $char = ''){
+                          foreach ($categories as $key => $item){
+                              if ($item['parent_id'] == $parent_id){
+                                ?>
+                                
+                                <div class="form-group clearfix">
+                                  <div class="icheck-success d-inline">
+                                    {!!$char!!}<input type="checkbox" id="{{$item['name']}}-{{$item['id']}}">
+                                    <label for="{{$item['name']}}-{{$item['id']}}">{{$item['name']}}
+                                    </label>
+                                  </div>
+                                </div>
+                                <?php
+                                  unset($categories[$key]);
+                                  showCategoriesOption($categories, $item['id'], $char.'&emsp;');
                               }
                           }
-                          showCategoriesOption($categories);
-                        ?>
-                      <!-- </select> -->
+                      }
+                      showCategoriesOption($categories);
+                    ?>
                   </div>
               </div>
 
@@ -214,13 +223,6 @@
                       <button type="button" class="btn btn-primary btn-media btn-image-gallery" data-toggle="modal" data-target=".modal-media">Add product gallery images</button>
                     </div>
                     <div class="row product-gallery">
-                      <!-- <div class="col-md-4 item-media">
-                        <div class="preview">
-                          <img src="https://hasinhayder.github.io/ImageCaptionHoverAnimation/img/everycowboy_dribbbleready_shot.jpg">
-                        </div>
-                        <i class="fas fa-times-circle"></i>
-                      </div> -->
-                      
                     </div>
                     <input type="hidden" name="product_gallery" value="">
                   </div>
