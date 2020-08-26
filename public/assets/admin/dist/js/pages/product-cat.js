@@ -26,6 +26,9 @@ $(document).ready(function(){
                 success: function(res) {
                 	
                   if(res){
+                    if(parentId){
+                      location.reload();
+                    }
                   	var data = $.parseJSON(res);
                   	$("#name").val('');
                   	$("#slug").val('');
@@ -210,3 +213,32 @@ $(document).on("click", "#media-img .item-media", function(){
     $(".btn-close-media").trigger('click');
     $(this).find('.preview').toggleClass('active');
   });
+
+$(document).on('click', '.cat-item .del', function(){
+    var ids = [];
+    ids.push($(this).data('id'));
+ 
+    var token = $('input[name="_token"]').val();
+    var cat_destroy = $('input[name="cat_destroy"]').val();
+    $.ajax({
+        url: cat_destroy,
+        data: {
+          '_token'    : token,
+          'name'    : name,
+          'ids'     : ids
+        },
+        type: 'post',
+        success: function(res) {
+          if(res){
+            $(".select-action").val('');
+          $.each(ids, function(index, id){
+            $(".cat-item.cat-" + id).hide(200).remove();
+          });
+            $.notify("Deleted successfully", "success");
+          }else{
+            $.notify("An error occurred, please try again", "error");
+          }
+          
+        }
+    });
+});

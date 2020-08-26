@@ -80,9 +80,14 @@
   										      <td class="attr-order">{{ $attr->order }}</td>
   										      <td class="attr-term">
                               @if(isset($terms[$attr->id]))
-                                @foreach($terms[$attr->id] as $item)
-                                  {{$item->name}}, 
-                                @endforeach
+                                <?php 
+                                  $termsName = '';
+                                  foreach($terms[$attr->id] as $item){
+                                    $termsName .= $item->name . ',';
+                                  }
+                                  $termsName = trim($termsName, ',');
+                                ?>
+                                {{$termsName}}
                                 <div class="row-actions">
                                   <span class="configure-terms">
                                     <a href="{{route('admin.product.attr.detail', $attr->id)}}">Configure terms</a>
