@@ -1,17 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\front;
+namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Slide;
-use App\Category;
-use App\Products;
+use App\ProductTags;
 
-use Mail;
-
-class IndexController extends Controller
+class ProductTagsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,23 +16,8 @@ class IndexController extends Controller
      */
     public function index()
     {
-        $listSlide = Slide::where('status', '1')->first()->toArray();
-        $categories = Category::where('status', '1')->limit(3)->get()->toArray();
-                
-        foreach ($categories as $key => $item) {
-            $categories[$key]['total_product'] = Products::where('category', $item['id'])->where('status', 1)->count();
-        }
-
-        $listProductPopular = Products::where('is_popular', 1)->where('status', 1)->skip(0)->take(8)->get()->toArray();
-            
-      
-
-        $dataView = [
-                'listSlide' => $listSlide, 
-                'categories' => $categories,
-                'listProductPopular' => $listProductPopular,
-            ];
-        return view('front.home')->with($dataView);
+        return response()->json(null, 204);
+        //return ProductTags::all();
     }
 
     /**
@@ -103,16 +84,5 @@ class IndexController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function sendMail(){
-        $to_name = 'VuQuang';
-        $to_email = 'quang96s2@gmail.com';
-        $data = array('name' => 'VQuang', 'body' => 'A test mail');
-        Mail::send('email.email', $data, function($message) use ($to_name, $to_email) {
-        $message->to($to_email, $to_name)
-                ->subject('Laravel Test Mail');
-                $message->from('vqvuquang@gmail.com', 'Test Mail');
-        });
     }
 }
