@@ -18,4 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/tags', ['uses' => 'api\ProductTagsController@index']);
+Route::group(['middleware' => 'auth:api', 'namespace' => 'api'], function(){
+	Route::get('/tags', ['uses' => 'ProductTagsController@index']);
+});

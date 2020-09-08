@@ -16,8 +16,8 @@ class ProductTagsController extends Controller
      */
     public function index()
     {
-        return response()->json(null, 204);
-        //return ProductTags::all();
+
+        return ProductTags::all();
     }
 
     /**

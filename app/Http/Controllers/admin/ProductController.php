@@ -10,6 +10,8 @@ use App\ProductCategories;
 use App\Media;
 use App\ProductTags;
 
+use App\Http\Requests\ProductValidate;
+
 class ProductController extends Controller
 {
 
@@ -50,16 +52,10 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductValidate $request)
     {
-        $validateData = $request->validate([
-            'product_code' => 'required|max:50',
-            'name' => 'required',
-            'price' => "required|regex:/^\d+(\.\d{1,2})?$/"
-        ]);
-
         $data = $request->all();
-            
+         
         $is_out_site =  isset($data['is_out_site']) ? $data['is_out_site'] : '0';
         $link_out_site =  isset($data['link_out_site']) ? $data['link_out_site'] : '';
         $name =  isset($data['name']) ? $data['name'] : '';
@@ -69,56 +65,48 @@ class ProductController extends Controller
         $slug =  isset($data['slug']) ? $data['slug'] : '';
         $description =  isset($data['description']) ? $data['description'] : '';
         $status =  isset($data['status']) ? $data['status'] : '1';
-        $category =  isset($data['category']) ? $data['category'] : '0';
+        $categories =  isset($data['categories']) ? $data['categories'] : [];
         $is_popular =  isset($data['is_popular']) ? $data['is_popular'] : '0';
+        $short_description =  isset($data['short_description']) ? $data['short_description'] : '';
+        $product_large =  isset($data['product_large']) ? $data['product_large'] : '';
+        $product_gallery =  isset($data['product_gallery']) ? $data['product_gallery'] : '';
+        $published =  isset($data['published']) ? date('Y-m-d H:i:s', strtotime($data['published'])) : date('Y-m-d H:i:s');
+        $tags =  isset($data['tags']) ? $data['tags'] : [];
+
+        $categories = implode(',', $categories);
+        $tags =  implode(',', $tags) ;
+
 
         $dataInsert = [
-            'is_out_site' => $is_out_site,
             'link_out_site' => $link_out_site,
             'name' => $name,
             'price' => $price,
             'price_sale' => $priceSale,
             'product_code' => $product_code,
             'slug' => $slug,
-            'category' => $category,
-            'is_popular' => $is_popular,
             'description' => $description,
-            'status' => $status,
-            'image' => '',
+            'image' => $product_large,
+            'image_gallery' => $product_gallery,
+            'tags' => $tags,
+            'short_description' => $short_description,
+            'categories' => $categories,
         ];
 
-        $result = Products::create($dataInsert);
-        if($result){
-            $product = Products::find($result->id);
-            
-            if($request->hasFile('image')){
-                $dirFile = 'uploads/product/' . date('Y') . '/' . date('m') . '/';
-                $directory = public_path($dirFile);
-                if(!file_exists($directory)){
-                    mkdir($directory, 0775, true);
-                }
-
-                $productImg = $request->file('image');
-                if($productImg->isValid()){
-                    $ext = $productImg->getClientOriginalExtension(); // lấy đuôi file
-                    if(in_array($ext, ['png', 'jpg', 'jpeg'])){
-                        $fileName = $productImg->getClientOriginalName();
-                        $fileName = $product->id. '_' .$fileName;
-                        $LinkDirFile = $dirFile . $fileName;
-                        $isUpload = $productImg->move($directory, $fileName);
-
-                        if($isUpload){
-                            $product->image = $LinkDirFile;
-                            $result = $product->save();
-                        }else{
-                            return redirect()->back()->with('error', 'Error, Upload file failed, please try again');
-                        }
-                    }else{
-                        return redirect()->back()->with('error', 'Unsupported file format');
-                    }
-                }
-            }
+        foreach ($dataInsert as $key => $value) {
+            $dataInsert[$key] = "'" . $value . "'";
         }
+
+      
+
+        $dataInsert['is_out_site'] = $is_out_site;
+        $dataInsert['is_popular'] = $is_popular;
+        $dataInsert['status'] = $status;
+        $dataInsert['published'] = $published;
+ 
+  
+       // $result = $product->save();
+        $result = Products::insertGetId($dataInsert);
+       
 
         
         if($result){

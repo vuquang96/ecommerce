@@ -152,7 +152,7 @@
                                 
                                 <div class="form-group clearfix">
                                   <div class="icheck-success d-inline">
-                                    {!!$char!!}<input type="checkbox" id="{{$item['name']}}-{{$item['id']}}">
+                                    {!!$char!!}<input type="checkbox" id="{{$item['name']}}-{{$item['id']}}" name="categories[]" value="{{$item['id']}}">
                                     <label for="{{$item['name']}}-{{$item['id']}}">{{$item['name']}}
                                     </label>
                                   </div>
