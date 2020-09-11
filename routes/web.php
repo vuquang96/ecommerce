@@ -99,9 +99,14 @@ Route::group(['middleware' => 'CheckLoginAdmin', 'prefix' => 'admin', 'namespace
 });
 //Route::get('/admin', 'admin\IndexController@index');
 Route::group(['namespace' => 'front'], function(){
-	Route::get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
+	//Route::get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
 
 	Route::get('/send-mail', ['as' => 'sendmail', 'uses' => 'IndexController@sendMail']);
 });
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
 
 

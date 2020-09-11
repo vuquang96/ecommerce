@@ -8,7 +8,7 @@
 
     @include('admin.layout.navbar')
 
-    @include('admin.layout.sidebar')
+    <!-- @include('admin.layout.sidebar') -->
 
     @yield('main')
     

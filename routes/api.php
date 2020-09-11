@@ -20,4 +20,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'auth:api', 'namespace' => 'api'], function(){
 	Route::get('/tags', ['uses' => 'ProductTagsController@index']);
+
+
 });
+
+Route::group(['prefix' => 'auth', 'namespace' => 'api'], function(){
+	Route::post('/login', 'AuthController@login');
+	Route::post('/signup', ['uses' => 'AuthController@signup']);
+	
+	Route::group(['middleware' => 'auth:api'], function(){
+		Route::get('logout', ['uses' => 'AuthController@logout']);
+		Route::get('user', ['uses' => 'AuthController@user']);
+	});
+});
+
+
+/*Route::group(['prefix' => '/v1', 'namespace' => 'Api\V1', 'as' => 'api.'], function () {
+    Route::resource('companies', 'CompaniesController', ['except' => ['create', 'edit']]);
+});*/
